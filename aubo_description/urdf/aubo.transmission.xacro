@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="aubo_arm_transmission" params="prefix">
 
@@ -12,7 +12,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-  
+
     <transmission name="${prefix}foreArm_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}foreArm_joint">
@@ -22,7 +22,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-  
+
     <transmission name="${prefix}upperArm_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}upperArm_joint">
@@ -32,7 +32,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-  
+
     <transmission name="${prefix}wrist1_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}wrist1_joint">
@@ -42,7 +42,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-  
+
     <transmission name="${prefix}wrist2_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}wrist2_joint">
@@ -52,7 +52,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-  
+
     <transmission name="${prefix}wrist3_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}wrist3_joint">
