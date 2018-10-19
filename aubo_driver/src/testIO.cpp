@@ -34,8 +34,8 @@
 #include <string>
 #include <cstdlib>
 
-int pin = 3;
-int fun = 3;
+int pin = 0;
+int fun = 1;
 int state = 1;
 void IOCallback(const aubo_msgs::IOState::ConstPtr &msg)
 {
