@@ -15,7 +15,7 @@
   <xacro:include filename="$(find phoxi_camera)/urdf/PhoXi3Dscanner_macro.xacro"/>  <!--Scanner macro-->
 
   <!-- workplatform-->
-  <xacro:include filename="$(find ur_description)/urdf/platform.urdf.xacro" />
+  <xacro:include filename="$(find aubo_description)/urdf/platform.urdf.xacro" />
 
 
   <!-- arm -->
