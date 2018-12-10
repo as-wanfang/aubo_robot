@@ -4,6 +4,17 @@
 
   <property name="prefix" value=""/>
   <property name="M_PI" value="3.14159265359" />
+  <material name="gray" >
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  <xacro:macro name="default_inertial" params="mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+    </inertial>
+  </xacro:macro>
+
   <!-- common stuff -->
   <xacro:include filename="$(find aubo_description)/urdf/common.gazebo.xacro" />
 
@@ -23,22 +34,106 @@
 
   <link name="world" />
 
-  <joint name="world_joint" type="fixed">
+  <!-- walls -->
+  <link name="wall">
+    <visual>
+      <geometry>
+        <box size="0.9 1.2 0.015"/>
+      </geometry>
+      <material name="gray"/>
+      <origin xyz="0 0 0.0075" rpy="0 -0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.9 1.2 0.015"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="1"/>
+  </link>
+  <joint name="world_wall_joint" type="fixed">
     <parent link="world" />
-    <child link = "box" />
-    <origin xyz="0.0 0.0 -${boxz}" rpy="0.0 0.0 0.0" />
+    <child link = "wall" />
+    <origin xyz="-0.2 -0.6 0.45" rpy="0.0 -1.57 0.0" />
   </joint>
 
-  <!-- photoneo camare -->
+  <link name="wall_1">
+    <visual>
+      <geometry>
+        <box size="0.9 0.9 0.015"/>
+      </geometry>
+      <material name="gray"/>
+      <origin xyz="0 0 0.0075" rpy="0 -0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.9 0.9 0.015"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="1"/>
+  </link>
+  <joint name="world_wall_1_joint" type="fixed">
+    <parent link="world" />
+    <child link = "wall_1" />
+    <origin xyz="0.45 0.2 0.45" rpy="-1.57 0.0 0.0" />
+  </joint>
+
+  <!-- table -->
+  <xacro:boxbase prefix="table" child="basebox" boxx="0.9" boxy="1.2">
+    <origin xyz="-0.35 0.5 0.015" rpy="0.0 0.0 0.0"/>
+  </xacro:boxbase>
+
+  <joint name="world_table_joint" type="fixed">
+    <parent link="world" />
+    <child link = "tablebox" />
+    <origin xyz="0.45 -0.6 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- robot base flange -->
+  <xacro:boxbase prefix="base" child="base_link" boxx="0.2" boxy="0.2">
+    <origin xyz="0.0 0.0 0.015" rpy="0.0 0.0 0.0"/>
+  </xacro:boxbase>
+<!--
+  <joint name="world_basebox_joint" type="fixed">
+    <parent link="world" />
+    <child link = "basebox" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint> -->
+
+
+  <!-- photoneo camare z=calibration_z + base link height 0.022-->
   <xacro:PhoXi3Dscanner scanner_name = "PhoXi3Dscanner" sensor_parent = "base_link" sensor_name = "PhoXi3Dscanner_sensor" >
-      <origin xyz="0.3701947 -0.88796907 0.49853821" rpy="-2.54383012747886 0.19148351856670115 0.20962739482664153" /> <!--PhoXi3Dscanner origin-->
+      <origin xyz="0.39726831 -0.74599514  0.51817825"  rpy="-2.561444662106709 0.1522354788056578 0.09614205988298628" />
       <xacro:PhoXi3DscannerS_default_sensor_origin /> <!--Extrinsic calibration data-->
       <xacro:PhoXi3DscannerS_meshes /> <!--meshes-->
   </xacro:PhoXi3Dscanner>
 
-  <!-- workplatform -->
-  <xacro:boxbase child="base_link" >
-    <origin xyz="0.0 0.0 ${boxz}" rpy="0.0 0.0 0.0"/>
-  </xacro:boxbase>
+
+  <link name="ee_link" />
+  <joint name="ee_joint" type="fixed">
+    <parent link="wrist3_Link" />
+    <child link = "ee_link" />
+    <origin xyz="0.0 0.0 0.13" rpy="0.0 -1.571 0.0" />
+  </joint>
+
+  <link name="suction_cup">
+    <visual>
+      <geometry>
+        <cylinder radius="0.01" length="0.13"/>
+      </geometry>
+      <material name="gray"/>
+      <origin xyz="0 0 0.0" rpy="0 -0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.01" length="0.13"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="1"/>
+  </link>
+  <joint name="wrist3_suction_cup_joint" type="fixed">
+    <parent link="wrist3_Link" />
+    <child link = "suction_cup" />
+    <origin xyz="0.0 0.0 0.07" rpy="0.0 0.0 0.0" />
+  </joint>
 
 </robot>

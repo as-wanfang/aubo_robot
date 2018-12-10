@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot name="box" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:property name="boxx" value="0.15" />
-  <xacro:property name="boxy" value="0.15" />
+  <!-- <xacro:property name="boxx" value="0.15" /> -->
+  <!-- <xacro:property name="boxy" value="0.15" /> -->
   <xacro:property name="boxz" value="0.015" />
 
 
@@ -18,8 +18,8 @@
     </inertial>
   </xacro:macro>
 
-  <xacro:macro name="boxbase" params="child  *origin">
-    <link name="box">
+  <xacro:macro name="boxbase" params="prefix child boxx boxy *origin">
+    <link name="${prefix}box">
       <visual>
         <geometry>
           <box size="${boxx} ${boxy} ${boxz}"/>
@@ -35,8 +35,8 @@
       <xacro:default_inertial mass="1"/>
     </link>
 
-    <joint name="box_joint" type="fixed">
-      <parent link="box"/>
+    <joint name="${prefix}box_joint" type="fixed">
+      <parent link="${prefix}box"/>
       <child link="${child}"/>
       <xacro:insert_block name="origin"/>
     </joint>
