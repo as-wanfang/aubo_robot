@@ -102,7 +102,7 @@
 
   <!-- photoneo camare z=calibration_z + base link height 0.022-->
   <xacro:PhoXi3Dscanner scanner_name = "PhoXi3Dscanner" sensor_parent = "base_link" sensor_name = "PhoXi3Dscanner_sensor" >
-      <origin xyz="0.39726831 -0.74599514  0.51817825"  rpy="-2.561444662106709 0.1522354788056578 0.09614205988298628" />
+      <origin xyz="0.38870691 -0.7320457  0.51444634"  rpy="-2.5794684381148576 0.2011879157832164 0.11661250572867099" />
       <xacro:PhoXi3DscannerS_default_sensor_origin /> <!--Extrinsic calibration data-->
       <xacro:PhoXi3DscannerS_meshes /> <!--meshes-->
   </xacro:PhoXi3Dscanner>

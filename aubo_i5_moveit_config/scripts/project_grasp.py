@@ -53,8 +53,10 @@ camera_info.header.frame_id = 'PhoXi3Dscanner_sensor'
 camera_info.height = 772
 camera_info.width = 1032
 
+global home_joint_positions
 global place_joint_positions
-place_joint_positions = [-97.25/180*3.14, 2.0/180*3.14, 125.8/180*3.14, 34.1/180*3.14, 96.1/180*3.14, 12.7/180*3.14]
+home_joint_positions = [-97.25/180*3.14, 2.0/180*3.14, 125.8/180*3.14, 34.1/180*3.14, 96.1/180*3.14, 12.7/180*3.14]
+place_joint_positions = [7.67/180*3.14, -20.37/180*3.14, 55.81/180*3.14, -8.12/180*3.14, 92.69/180*3.14, 129.1/180*3.14]
 
 
 def pcl_callback(pcl_msg):
@@ -76,9 +78,9 @@ def callback(depth, rgb):
         plan_routine = rospy.ServiceProxy('plan_gqcnn_grasp', GQCNNGraspPlanner)
         resp = plan_routine(rgb, depth, camera_info, bounding_box)
         grasp = resp.grasp
-        grasp.pose.position.x = grasp.pose.position.x/1000
-        grasp.pose.position.y = grasp.pose.position.y/1000
-        grasp.pose.position.z = grasp.pose.position.z/1000
+        grasp.pose.position.x = grasp.pose.position.x
+        grasp.pose.position.y = grasp.pose.position.y
+        grasp.pose.position.z = grasp.pose.position.z
         print "*************************************************"
         print ("Pose: ", grasp)
     except rospy.ServiceException, e:
@@ -94,6 +96,12 @@ def callback(depth, rgb):
     print "*************************************************"
     print ("transform matrix: ", trans)
     print ("pose_transformed: ", pose_transformed)
+
+    pose_transformed.pose.orientation.x = -0.70387
+    pose_transformed.pose.orientation.y = 0.0207
+    pose_transformed.pose.orientation.z = 0.70935
+    pose_transformed.pose.orientation.w = 0.0308
+
     pose_pub.publish(pose_transformed)
 
     pose_transformed.pose.position.z = pose_transformed.pose.position.z + 0.05
@@ -101,7 +109,7 @@ def callback(depth, rgb):
     plan = group.plan()
     group.execute(plan)
 
-    pose_transformed.pose.position.z = pose_transformed.pose.position.z - 0.055
+    pose_transformed.pose.position.z = pose_transformed.pose.position.z - 0.060
     group.set_pose_target(pose_transformed, end_effector_link='ee_link')
     plan = group.plan()
     group.execute(plan)
@@ -109,18 +117,23 @@ def callback(depth, rgb):
     set_digital_out(0, False)
     time.sleep(1)
 
-    pose_transformed.pose.position.z = pose_transformed.pose.position.z + 0.05
+    pose_transformed.pose.position.z = pose_transformed.pose.position.z + 0.1
     group.set_pose_target(pose_transformed, end_effector_link='ee_link')
+    plan = group.plan()
+    group.execute(plan)
+    time.sleep(1)
+
+    group.set_joint_value_target(place_joint_positions)
     plan = group.plan()
     group.execute(plan)
     time.sleep(1)
     set_digital_out(0, True)
     time.sleep(1)
 
-    group.set_joint_value_target(place_joint_positions)
-    plan = group.plan()
-    group.execute(plan)
-    time.sleep(5)
+    # group.set_joint_value_target(home_joint_positions)
+    # plan = group.plan()
+    # group.execute(plan)
+    # time.sleep(5)
     rospy.ServiceProxy('phoxi_camera/get_frame', GetFrame)(-1)
 
 # function to load parameters and request PickPlace service
@@ -135,7 +148,7 @@ if __name__ == '__main__':
     robot = moveit_commander.RobotCommander()
     scene = moveit_commander.PlanningSceneInterface()
     group = moveit_commander.MoveGroupCommander("manipulator_i5")
-    group.set_planner_id('RRTConnectkConfig1')
+    group.set_planner_id('RRTConnectkConfigDefault')
     group.set_num_planning_attempts(5)
     group.set_planning_time(5)
     group.set_max_velocity_scaling_factor(0.5)
