@@ -85,7 +85,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          box:
+          basebox:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -104,7 +104,22 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          tablebox:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           upperArm_Link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -148,7 +163,7 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0.075000003
+        Interactive Marker Size: 0.0250000022
         Joint Violation Color: 255; 0; 255
         Planning Group: manipulator_i5
         Query Goal State: true
@@ -187,7 +202,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          box:
+          basebox:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -206,7 +221,22 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          tablebox:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           upperArm_Link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -238,19 +268,19 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.445256889
-        Min Value: -0.333801806
+        Max Value: 0.512660027
+        Min Value: -0.0305554271
         Value: true
       Axis: Z
       Channel Name: normal_z
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: AxisColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0.812326968
+      Max Intensity: 0
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: PointCloud2
@@ -296,7 +326,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.40049076
+      Distance: 1.08454013
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -311,10 +341,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: -0.0802033842
+      Pitch: -0.0652033463
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 4.50492668
+      Yaw: 4.38992357
     Saved: ~
 Window Geometry:
   Displays:

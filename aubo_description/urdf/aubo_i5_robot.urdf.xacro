@@ -85,7 +85,7 @@
   <joint name="world_table_joint" type="fixed">
     <parent link="world" />
     <child link = "tablebox" />
-    <origin xyz="0.45 -0.6 0.0" rpy="0.0 0.0 0.0" />
+    <origin xyz="0.35 -0.5 -0.03" rpy="0.0 0.0 0.0" />
   </joint>
 
   <!-- robot base flange -->
@@ -100,9 +100,19 @@
   </joint> -->
 
 
-  <!-- photoneo camare z=calibration_z + base link height 0.022-->
+  <!-- if urdf joint name="shoulder_joint" z=0.1205, photoneo camare z=calibration_z + base link height 0.022-->
+  <!-- if urdf joint name="shoulder_joint" z=0.985, photoneo camare z=calibration_z-->
   <xacro:PhoXi3Dscanner scanner_name = "PhoXi3Dscanner" sensor_parent = "base_link" sensor_name = "PhoXi3Dscanner_sensor" >
-      <origin xyz="0.38870691 -0.7320457  0.51444634"  rpy="-2.5794684381148576 0.2011879157832164 0.11661250572867099" />
+      <!-- <origin xyz="0.38870691 -0.7320457  0.51444634"  rpy="-2.5794684381148576 0.2011879157832164 0.11661250572867099" /> -->
+      <!-- Wanfang's Ransac circle fitting and direct inverse with 20181217-->
+      <!-- <origin xyz="0.39701771 -0.72906429  0.51308844"  rpy="-2.58534228337 0.201952200616 0.123420790853" /> -->
+      <!-- Zhang siyu's calibration result in data.txt, data is wrong-->
+      <!-- <origin xyz="0.3932 -0.7376  0.5086"  rpy="-2.565 0.2099 0.1225" /> -->
+      <!-- Wanfang's Ransac circle fitting and svd with 20181217 (4 points)-->
+      <!-- <origin xyz="0.3927906 -0.7342605 0.51358862"  rpy="-2.5886748775 0.201174261751 0.12390901829" /> -->
+      <origin xyz="0.39241096 -0.73567181 0.51311991"  rpy="-2.58465770694 0.198671849771 0.125345640075" />
+      <!-- using svd with 27 points-->
+      <!-- <origin xyz="0.39236844 -0.7348412 0.51330159"  rpy="-2.58708411761 0.19718256429 0.125377033832" /> -->
       <xacro:PhoXi3DscannerS_default_sensor_origin /> <!--Extrinsic calibration data-->
       <xacro:PhoXi3DscannerS_meshes /> <!--meshes-->
   </xacro:PhoXi3Dscanner>
@@ -115,7 +125,7 @@
     <origin xyz="0.0 0.0 0.13" rpy="0.0 -1.571 0.0" />
   </joint>
 
-  <link name="suction_cup">
+  <!-- <link name="suction_cup">
     <visual>
       <geometry>
         <cylinder radius="0.01" length="0.13"/>
@@ -134,6 +144,6 @@
     <parent link="wrist3_Link" />
     <child link = "suction_cup" />
     <origin xyz="0.0 0.0 0.07" rpy="0.0 0.0 0.0" />
-  </joint>
+  </joint> -->
 
 </robot>
